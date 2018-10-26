@@ -6,7 +6,7 @@
 /*   By: gmonacho <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/25 17:44:46 by gmonacho     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/26 20:32:31 by gmonacho    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/26 20:49:23 by gmonacho    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,12 +87,12 @@ int				get_next_line(const int fd, char **line)
 	while (!ft_strchr(tmp->content, '\n') && (nbchar = read(tmp->content_size, buf, BUFF_SIZE)) > 0)
 	{
 		buf[nbchar] = '\0';
-		//tmptofree = tmp->content;
-		//tmp->content = ft_strjoin(tmptofree, buf);
-		//free(tmptofree);
-		tmptofree = ft_strjoin(tmp->content, buf);
-		tmp->content = tmptofree;
+		tmptofree = tmp->content;
+		tmp->content = ft_strjoin(tmptofree, buf);
 		free(tmptofree);
+		//tmptofree = ft_strjoin(tmp->content, buf);
+		//tmp->content = ft_strdup(tmptofree);
+		//free(tmptofree);
 	}
 	if (nbchar < 0)
 		return (-1);
