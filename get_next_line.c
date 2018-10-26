@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmonacho <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/25 17:44:46 by gmonacho     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/26 20:49:23 by gmonacho    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/26 21:57:26 by gmonacho     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/26 22:03:11 by gmonacho    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,10 +59,14 @@ static t_list	*ft_set_tmp_value(t_list *list, int fd)
 
 static void		ft_set_line_tmp_value(char **line, t_list **tmp)
 {
+	char	*tmptofree;
+
 	if (ft_strchr((*tmp)->content, '\n'))
 	{
 		*line = ft_first_return((*tmp)->content);
-		(*tmp)->content = ft_strchr((*tmp)->content, '\n') + 1;
+		tmptofree = (*tmp)->content;
+		(*tmp)->content = ft_strdup(tmptofree + ft_index(tmptofree, '\n') + 1);
+		free(tmptofree);
 	}
 	else
 	{
@@ -81,22 +85,17 @@ int				get_next_line(const int fd, char **line)
 
 	if (read(fd, buf, 0) == -1)
 		return (-1);
-	if (!list)
-		list = (t_list*)ft_memalloc(sizeof(t_list));
+	list = (!list) ? (t_list*)ft_memalloc(sizeof(t_list)) : list;
 	tmp = ft_set_tmp_value(list, fd);
-	while (!ft_strchr(tmp->content, '\n') && (nbchar = read(tmp->content_size, buf, BUFF_SIZE)) > 0)
+	while (!ft_strchr(tmp->content, '\n')
+			&& (nbchar = read(tmp->content_size, buf, BUFF_SIZE)) > 0)
 	{
 		buf[nbchar] = '\0';
 		tmptofree = tmp->content;
 		tmp->content = ft_strjoin(tmptofree, buf);
 		free(tmptofree);
-		//tmptofree = ft_strjoin(tmp->content, buf);
-		//tmp->content = ft_strdup(tmptofree);
-		//free(tmptofree);
 	}
-	if (nbchar < 0)
-		return (-1);
-	else if (((char*)tmp->content)[0] != '\0')
+	if (((char*)tmp->content)[0] != '\0')
 	{
 		ft_set_line_tmp_value(line, &tmp);
 		return (1);

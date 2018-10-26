@@ -6,14 +6,14 @@
 /*   By: gmonacho <gmonacho@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 12:50:32 by gmonacho     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/26 18:55:38 by gmonacho    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/26 21:50:04 by gmonacho    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 10
+# define BUFF_SIZE 100
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
